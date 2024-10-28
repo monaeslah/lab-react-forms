@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Navbar from './components/Navbar'
 import TableHeader from './components/TableHeader'
 import StudentCard from './components/StudentCard'
-import AddStudentForm from './components/AddStudentForm'
+import AddStudent from './components/AddStudentForm'
 import studentsData from './assets/students.json'
 
 function App () {
@@ -18,7 +18,7 @@ function App () {
       <Navbar />
 
       {/* FORM */}
-      <AddStudentForm callBacktoAddStudent={createStudent} />
+      <AddStudent callBacktoAddStudent={createStudent} />
 
       {/* FORM END */}
 
