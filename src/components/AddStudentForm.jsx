@@ -1,56 +1,38 @@
 import { useState } from 'react'
 
 const AddStudentForm = props => {
-  const [fullName, setFullName] = useState('')
+  const [formValues, setFormValues] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    program: '',
+    image: '',
+    graduationYear: 2024,
+    graduated: false
+  })
 
-  const [email, setEmail] = useState('')
-
-  const [phone, setPhone] = useState('')
-
-  const [program, setProgram] = useState('')
-
-  const [image, setImage] = useState('')
-
-  const [graduationYear, setGraduationYear] = useState(2024)
-
-  const [graduated, setGraduated] = useState(false)
+  const handleInputChange = e => {
+    const { name, value, type, checked } = e.target
+    setFormValues({
+      ...formValues,
+      [name]: type === 'checkbox' ? checked : value
+    })
+  }
 
   const handleSubmit = e => {
     e.preventDefault()
-
-    const newStudentObj = {
-      fullName: fullName,
-
-      email: email,
-
-      phone: phone,
-
-      program: program,
-
-      image: image,
-
-      graduationYear: graduationYear,
-
-      graduated: graduated
-    }
-
+    const newStudentObj = { ...formValues }
     props.callBacktoAddStudent(newStudentObj)
 
-    // clear all input fields after submission
-
-    setFullName('')
-
-    setEmail('')
-
-    setPhone('')
-
-    setProgram('')
-
-    setImage('')
-
-    setGraduationYear(0)
-
-    setGraduated(false)
+    setFormValues({
+      fullName: '',
+      email: '',
+      phone: '',
+      program: '',
+      image: '',
+      graduationYear: 2024,
+      graduated: false
+    })
   }
 
   return (
@@ -64,10 +46,8 @@ const AddStudentForm = props => {
             name='fullName'
             type='text'
             placeholder='Full Name'
-            value={fullName}
-            onChange={e => {
-              setFullName(e.target.value)
-            }}
+            value={formValues.fullName}
+            onChange={handleInputChange}
           />
         </label>
 
@@ -77,10 +57,8 @@ const AddStudentForm = props => {
             name='image'
             type='url'
             placeholder='Profile Image'
-            value={image}
-            onChange={e => {
-              setImage(e.target.value)
-            }}
+            value={formValues.image}
+            onChange={handleInputChange}
           />
         </label>
 
@@ -90,10 +68,8 @@ const AddStudentForm = props => {
             name='phone'
             type='tel'
             placeholder='Phone'
-            value={phone}
-            onChange={e => {
-              setPhone(e.target.value)
-            }}
+            value={formValues.phone}
+            onChange={handleInputChange}
           />
         </label>
 
@@ -103,10 +79,8 @@ const AddStudentForm = props => {
             name='email'
             type='email'
             placeholder='Email'
-            value={email}
-            onChange={e => {
-              setEmail(e.target.value)
-            }}
+            value={formValues.email}
+            onChange={handleInputChange}
           />
         </label>
       </div>
@@ -116,15 +90,12 @@ const AddStudentForm = props => {
           Program
           <select
             name='program'
-            value={program}
-            onChange={e => setProgram(e.target.value)}
+            value={formValues.program}
+            onChange={handleInputChange}
           >
             <option value=''>-- None --</option>
-
             <option value='Web Dev'>Web Dev</option>
-
             <option value='UXUI'>UXUI</option>
-
             <option value='Data'>Data</option>
           </select>
         </label>
@@ -135,14 +106,10 @@ const AddStudentForm = props => {
             name='graduationYear'
             type='number'
             placeholder='Graduation Year'
-            minLength={4}
-            maxLength={4}
-            min={2023}
-            max={2030}
-            value={graduationYear}
-            onChange={e => {
-              setGraduationYear(e.target.value)
-            }}
+            min='2023'
+            max='2030'
+            value={formValues.graduationYear}
+            onChange={handleInputChange}
           />
         </label>
 
@@ -151,10 +118,8 @@ const AddStudentForm = props => {
           <input
             name='graduated'
             type='checkbox'
-            checked={graduated}
-            onChange={e => {
-              setGraduated(e.target.checked)
-            }}
+            checked={formValues.graduated}
+            onChange={handleInputChange}
           />
         </label>
 
